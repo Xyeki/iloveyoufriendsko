@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>I’m really sorry 🌸</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800&display=swap">
+<style>
+:root{
+  --bg1:#f6a6c1;--bg2:#e86a92;--bg3:#ffc2d4;
+  --card:rgba(255,255,255,.96);--ink:#c2285f;--ink2:#7a3050;--line:#f3b4cb;
+  --btn1:#ff7fb0;--btn2:#e6317d;--no1:#ffd0de;--no2:#f58fb4;
+  --panel:#fff;--field:#fff4f8;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg1:#4a1530;--bg2:#8a2756;--bg3:#5c1c3d;--card:rgba(38,16,28,.95);--ink:#ff8fb8;--ink2:#e9c3d3;--line:#6b2a48;--panel:#2a1220;--field:#3a1a2c}
+}
+:root[data-theme="dark"]{--bg1:#4a1530;--bg2:#8a2756;--bg3:#5c1c3d;--card:rgba(38,16,28,.95);--ink:#ff8fb8;--ink2:#e9c3d3;--line:#6b2a48;--panel:#2a1220;--field:#3a1a2c}
+*{box-sizing:border-box;margin:0;padding:0}
+html{height:100%}
+body{min-height:100%;font-family:'Nunito',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at 20% 20%,rgba(110,60,190,.45),transparent 55%),radial-gradient(ellipse at 80% 75%,rgba(40,90,200,.4),transparent 55%),radial-gradient(ellipse at 65% 8%,rgba(200,50,140,.3),transparent 45%),#05030f;overflow:hidden;color:var(--ink2)}
+#stars{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.planet{position:fixed;z-index:1;border-radius:50%;pointer-events:none;animation:drift 9s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translateY(-14px)}}
+.p1{width:min(34vmin,230px);aspect-ratio:1;left:5%;top:9%;background:radial-gradient(circle at 30% 28%,#ffc0dc,#c4508f 45%,#431659 100%);box-shadow:0 0 50px rgba(255,120,190,.35),inset -22px -12px 36px rgba(0,0,0,.55)}
+.p2{width:min(24vmin,170px);aspect-ratio:1;right:6%;bottom:9%;animation-delay:-3s;background:radial-gradient(circle at 32% 30%,#b5e4ff,#3f78d6 48%,#0c1a4d 100%);box-shadow:0 0 40px rgba(90,160,255,.4),inset -16px -10px 28px rgba(0,0,0,.55)}
+.p3{width:min(11vmin,80px);aspect-ratio:1;right:12%;top:12%;animation-delay:-5s;background:radial-gradient(circle at 32% 30%,#ffe2b0,#e08a3c 55%,#6a3012 100%);box-shadow:inset -8px -5px 14px rgba(0,0,0,.5)}
+.p3::after{content:"";position:absolute;left:-45%;top:30%;width:190%;height:40%;border:4px solid rgba(255,225,175,.65);border-radius:50%;transform:rotate(-20deg)}
+.p4{width:min(8vmin,56px);aspect-ratio:1;left:10%;bottom:11%;animation-delay:-7s;background:radial-gradient(circle at 32% 30%,#f2f2f6,#9a9aae 55%,#3c3c4c 100%);box-shadow:inset -6px -4px 10px rgba(0,0,0,.5)}
+@keyframes shift{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
+.card{position:relative;z-index:2;width:min(92%,640px);padding:36px 24px 28px;text-align:center;background:var(--card);border:3px solid var(--line);border-radius:32px;box-shadow:0 24px 60px rgba(120,20,60,.35)}
+#msg{font-size:clamp(1.6rem,6vw,2.5rem);line-height:1.35;color:var(--ink);font-weight:bold;min-height:2.7em;display:flex;align-items:center;justify-content:center}
+#msg.shake{animation:shake .45s}
+@keyframes shake{25%{transform:translateX(-9px) rotate(-2deg)}75%{transform:translateX(9px) rotate(2deg)}}
+.arena{position:relative;height:210px;margin:18px 0 6px}
+button,input,textarea{font:inherit}
+.arena button{position:absolute;border:0;border-radius:999px;font-weight:bold;cursor:pointer;font-size:1.15rem;padding:14px 26px;max-width:92%;box-shadow:0 8px 22px rgba(0,0,0,.2)}
+#yes{left:50%;top:30%;transform:translate(-50%,-50%) scale(1);background:linear-gradient(135deg,var(--btn1),var(--btn2));color:#fff;z-index:3;transition:transform .25s}
+#no{left:50%;top:80%;transform:translate(-50%,-50%);background:linear-gradient(135deg,var(--no1),var(--no2));color:#7a1f48;z-index:2;transition:left .18s,top .18s,transform .18s}
+#status{min-height:1.6em;font-size:1rem;color:var(--ink);font-weight:bold}
+#bloom{display:none;margin:0 auto 8px;width:min(260px,70%)}
+.headgrow,.grow .petals{transform-box:fill-box;transform-origin:center}
+.stemsB{transform-origin:120px 175px;animation:up .8s cubic-bezier(.2,1.2,.4,1) both}
+.coneB{transform-origin:120px 232px;animation:head .6s .1s cubic-bezier(.2,1.5,.4,1) both}
+#bloom.show{display:block}
+.flower{position:fixed;z-index:50;pointer-events:none;width:var(--s,70px);height:var(--s,70px);margin:calc(var(--s,70px)/-2) 0 0 calc(var(--s,70px)/-2);animation:pop 2.6s ease-out forwards}
+@keyframes pop{0%{transform:scale(0) rotate(-120deg);opacity:0}15%{transform:scale(1.25) rotate(10deg);opacity:1}25%{transform:scale(1) rotate(0)}80%{opacity:1}100%{transform:scale(1) translateY(-30px) rotate(20deg);opacity:0}}
+.grow .petals{transform-origin:50px 50px;animation:spin 14s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.stemgrow{transform-origin:50px 160px;animation:up .9s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes up{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.headgrow{transform-origin:50px 50px;animation:head .7s .6s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes head{from{transform:scale(0)}to{transform:scale(1)}}
+#gear{position:fixed;z-index:60;top:calc(env(safe-area-inset-top,0px) + 10px);right:12px;border:0;border-radius:999px;padding:10px 16px;background:var(--panel);color:var(--ink);font-weight:bold;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer}
+#panel{position:fixed;z-index:70;left:0;right:0;bottom:0;max-height:78%;overflow:auto;background:var(--panel);border-radius:24px 24px 0 0;padding:18px 18px calc(env(safe-area-inset-bottom,0px) + 18px);box-shadow:0 -10px 40px rgba(0,0,0,.35);transform:translateY(105%);transition:transform .3s}
+#panel.open{transform:none}
+#panel h2{font-size:1.1rem;color:var(--ink);margin-bottom:10px}
+label{display:block;font-size:.85rem;margin:10px 0 4px;color:var(--ink2)}
+input[type=text],textarea{width:100%;padding:10px 12px;border:2px solid var(--line);border-radius:12px;background:var(--field);color:var(--ink2)}
+textarea{min-height:110px;resize:vertical}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+input[type=color]{width:46px;height:36px;border:0;background:none}
+.row button{border:0;border-radius:999px;padding:10px 18px;font-weight:bold;cursor:pointer;background:var(--btn2);color:#fff}
+.row button.alt{background:var(--field);color:var(--ink);border:2px solid var(--line)}
+.hint{font-size:.75rem;opacity:.8;margin-top:6px}
+@media (prefers-reduced-motion:reduce){body,#msg.shake,.grow .petals{animation:none}}
+.back{position:fixed;z-index:60;top:calc(env(safe-area-inset-top,0px) + 10px);left:12px;padding:9px 16px;border-radius:999px;background:var(--panel);color:var(--ink);font-weight:bold;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+</style>
+</head>
+<body>
+<a class="back" href="index.html">← Back</a>
+<canvas id="stars" aria-hidden="true"></canvas>
+<div class="planet p1"></div><div class="planet p2"></div><div class="planet p3"></div><div class="planet p4"></div>
+
+
+<main class="card">
+  <div id="bloom" aria-hidden="true"></div>
+  <div id="msg"></div>
+  <div class="arena" id="arena">
+    <button id="yes"></button>
+    <button id="no"></button>
+  </div>
+  <div id="status"></div>
+</main>
+
+
+
+<script>
+const DEFAULTS={
+  name:"Bam",
+  msg:"I’m really sorry, {name}<br>Please forgive me 🥺",
+  yes:"Okayyy, I forgive you!",
+  no:"No, bahala ka jan 🙄",
+  win:"This is for you Bam! This is for us to ease up our tensions. I hope this makes you happy and not have hard feelings for me anymore! I’m sorry bammm!",
+  color:"#ff6fa5",
+  extra:["I promise I’ll do better","You mean the world to me, {name}","Please give me another chance","I’ll buy you ice cream","Pretty please with a cherry on top?"].join("\n")
+};
+let cfg=Object.assign({},DEFAULTS);
+
+const $=id=>document.getElementById(id);
+(function(){
+  const cv=$("stars"),cx=cv.getContext("2d");let S=[],W,Hh;
+  const still=matchMedia("(prefers-reduced-motion:reduce)").matches;
+  function size(){W=cv.width=innerWidth;Hh=cv.height=innerHeight;
+    S=Array.from({length:Math.round(W*Hh/4500)},()=>({x:Math.random()*W,y:Math.random()*Hh,r:Math.random()*1.4+.3,p:Math.random()*6.28,v:.5+Math.random()*1.5,c:["#fff","#cfe0ff","#ffe6f2"][Math.floor(Math.random()*3)]}))}
+  function draw(t){cx.clearRect(0,0,W,Hh);
+    for(const s of S){cx.globalAlpha=.35+.65*Math.abs(Math.sin(s.p+t/1000*s.v));cx.fillStyle=s.c;cx.beginPath();cx.arc(s.x,s.y,s.r,0,6.283);cx.fill()}
+    if(!still)requestAnimationFrame(draw)}
+  size();addEventListener("resize",()=>{size();if(still)draw(0)});draw(0);
+})();
+const msgEl=$("msg"),yes=$("yes"),no=$("no"),arena=$("arena"),statusEl=$("status"),bloom=$("bloom");
+
+let tries=0,won=false;
+const nm=t=>t.replace(/\{name\}/g,cfg.name||"you");
+const esc=t=>t.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+const withBr=t=>esc(nm(t)).replace(/&lt;br>/g,"<br>");
+
+
+function render(){
+  if(!won)msgEl.innerHTML=tries?msgEl.innerHTML:withBr(cfg.msg);
+  yes.textContent=cfg.yes;no.textContent=cfg.no;
+}
+function extras(){return cfg.extra.split("\n").map(s=>s.trim()).filter(Boolean)}
+
+function flowerSVG(color,stem){
+  let p="";for(let i=0;i<8;i++)p+=`<ellipse cx="50" cy="27" rx="12" ry="21" fill="${color}" stroke="rgba(0,0,0,.12)" stroke-width="1" transform="rotate(${i*45} 50 50)"/>`;
+  const head=`<g class="petals">${p}</g><circle cx="50" cy="50" r="13" fill="#ffd23f"/><circle cx="46" cy="46" r="3" fill="#fff6" /><circle cx="54" cy="53" r="2.5" fill="#c98a00" opacity=".5"/>`;
+  if(stem)return bouquetSVG(color);
+  if(!stem)return `<svg viewBox="0 0 100 100" width="100%" height="100%">${head}</svg>`;
+  return `<svg viewBox="0 0 100 165" width="100%">
+    <g class="stemgrow"><path d="M50 62 C46 100 54 130 50 162" stroke="#3f9b52" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <path d="M50 120 C30 112 22 100 20 96 C38 94 48 104 50 120Z" fill="#4fb860"/><path d="M50 136 C70 128 78 116 80 112 C62 110 52 120 50 136Z" fill="#4fb860"/></g>
+    <g class="headgrow">${head}</g></svg>`;
+}
+function bouquetSVG(c){
+  const H=[[120,52,.95,c],[64,84,.8,"#ffc2d6"],[176,84,.8,"#ffffff"],[92,108,.7,"#ffb36b"],[150,110,.7,"#c9a7ff"]];
+  const stems=H.map(h=>`<path d="M${h[0]} ${h[1]} Q${(h[0]+120)/2} ${(h[1]+175)/2+8} 120 175" stroke="#3f9b52" stroke-width="4" fill="none" stroke-linecap="round"/>`).join("");
+  const leaf=(x,y,r)=>`<ellipse cx="${x}" cy="${y}" rx="7" ry="17" fill="#4fb860" transform="rotate(${r} ${x} ${y})"/>`;
+  const heads=H.map((h,i)=>{let p="";for(let k=0;k<8;k++)p+=`<ellipse cx="50" cy="27" rx="12" ry="21" fill="${h[3]}" stroke="rgba(0,0,0,.14)" stroke-width="1" transform="rotate(${k*45} 50 50)"/>`;
+    return `<g transform="translate(${h[0]} ${h[1]}) scale(${h[2]*.75}) translate(-50 -50)"><g class="headgrow" style="animation-delay:${.5+i*.18}s"><g class="petals">${p}</g><circle cx="50" cy="50" r="13" fill="#ffd23f"/><circle cx="54" cy="53" r="3" fill="#c98a00" opacity=".5"/></g></g>`}).join("");
+  return `<svg viewBox="0 0 240 240" width="100%" role="img" aria-label="A bouquet of flowers"><g class="stemsB">${stems}${leaf(96,140,-55)}${leaf(146,138,55)}${leaf(120,126,0)}</g>${heads}<g class="coneB"><path d="M62 138 L178 138 L120 232 Z" fill="#f6dcc0" stroke="#d9b48c" stroke-width="2"/><path d="M88 138 L120 232 M152 138 L120 232" stroke="#e6c4a2" stroke-width="2"/><path d="M90 166 L150 166 L142 180 L98 180Z" fill="#e6317d"/><ellipse cx="108" cy="170" rx="13" ry="8" fill="#ff7fb0" transform="rotate(-18 108 170)"/><ellipse cx="132" cy="170" rx="13" ry="8" fill="#ff7fb0" transform="rotate(18 132 170)"/><circle cx="120" cy="172" r="6" fill="#e6317d"/></g></svg>`;
+}
+function pop(x,y,size){
+  const f=document.createElement("div");f.className="flower";
+  f.style.left=x+"px";f.style.top=y+"px";f.style.setProperty("--s",(size||30+Math.random()*34)+"px");
+  f.innerHTML=flowerSVG(cfg.color,false);document.body.appendChild(f);
+  setTimeout(()=>f.remove(),2700);
+}
+function burst(x,y,n){for(let i=0;i<n;i++)setTimeout(()=>pop(x+(Math.random()-.5)*160,y+(Math.random()-.5)*120),i*90)}
+
+function moveNo(){
+  const a=arena.getBoundingClientRect(),b=no.getBoundingClientRect(),y=yes.getBoundingClientRect();
+  let x,t,k=0;
+  do{
+    x=b.width/2+Math.random()*(a.width-b.width);
+    t=b.height/2+Math.random()*(a.height-b.height);
+    k++;
+    var l=a.left+x-b.width/2,r=l+b.width,tp=a.top+t-b.height/2,bt=tp+b.height;
+  }while(k<40&&!(r+14<y.left||l-14>y.right||bt+10<y.top||tp-10>y.bottom));
+  no.style.left=x+"px";no.style.top=t+"px";
+  no.style.transform=`translate(-50%,-50%) scale(${Math.max(.45,1-tries*.07)})`;
+}
+function nope(e){
+  if(won)return;
+  if(e&&e.preventDefault)e.preventDefault();
+  const b=no.getBoundingClientRect();
+  tries++;moveNo();
+  const list=extras();
+  if(list.length){msgEl.innerHTML=withBr(list[(tries-1)%list.length])}
+  msgEl.classList.remove("shake");void msgEl.offsetWidth;msgEl.classList.add("shake");
+  statusEl.textContent=tries<=4?`Just tap yes… 🥺 (${tries})`:tries<=9?`I’m begging you 😭 (${tries})`:`I can do this all day 💪❤️ (${tries})`;
+  yes.style.transform=`translate(-50%,-50%) scale(${Math.min(1.7,1+tries*.06)})`;
+  pop(b.left+b.width/2,b.top+b.height/2);
+}
+no.addEventListener("pointerenter",e=>{if(e.pointerType==="mouse")nope(e)});
+no.addEventListener("click",nope);
+
+yes.addEventListener("click",()=>{
+  won=true;arena.style.display="none";
+  msgEl.innerHTML=withBr(cfg.win);msgEl.style.minHeight="0";
+  bloom.innerHTML=flowerSVG(cfg.color,true);bloom.classList.add("show","grow");
+  statusEl.textContent="";
+  const r=bloom.getBoundingClientRect();
+  burst(innerWidth/2,innerHeight/2,18);
+});
+
+/* tap anywhere to plant a flower */
+document.addEventListener("pointerdown",e=>{
+  if(e.target.closest("button,#panel,input,textarea,label"))return;
+  pop(e.clientX,e.clientY);
+});
+
+msgEl.innerHTML=withBr(cfg.msg);yes.textContent=cfg.yes;no.textContent=cfg.no;
+setTimeout(()=>pop(innerWidth/2,innerHeight*.18,50),700);
+</script>
+</body>
+</html>

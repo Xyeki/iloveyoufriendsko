@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Thank you, friends 💛</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800&display=swap">
+<style>
+:root{--card:rgba(24,14,44,.82);--ink:#f6eaff;--soft:#c9b6e6;--line:rgba(255,255,255,.14);--acc:#e8618c;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{height:100%}
+body{min-height:100%;display:flex;padding:16px;font-family:'Nunito',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--ink);overflow-x:hidden;
+  background:radial-gradient(1px 1px at 20px 30px,#fff,transparent),radial-gradient(1px 1px at 90px 70px,#fff,transparent),radial-gradient(1.5px 1.5px at 140px 20px,#cfe,transparent),radial-gradient(ellipse at 25% 20%,rgba(120,70,200,.5),transparent 55%),radial-gradient(ellipse at 80% 80%,rgba(40,90,200,.4),transparent 55%),#080414;
+  background-size:160px 100px,160px 100px,160px 100px,auto,auto,auto;background-attachment:fixed}
+button{font:inherit}
+.card{margin:auto;width:min(100%,560px);position:relative;z-index:2;text-align:center;padding:34px 22px 26px;background:var(--card);border:2px solid var(--line);border-radius:30px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 24px 60px rgba(0,0,0,.45);animation:rise .8s cubic-bezier(.2,1.2,.4,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(30px) scale(.96)}}
+.kicker{font-weight:700;font-size:.95rem;letter-spacing:.08em;text-transform:uppercase;color:var(--acc)}
+h1{font-size:clamp(1.8rem,7.5vw,2.8rem);line-height:1.15;font-weight:800;margin:8px 0 12px}
+#msg{font-size:1.05rem;line-height:1.55;color:var(--soft);font-weight:500}
+#chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:22px 0 14px}
+.chip{border:2px solid var(--acc);background:transparent;color:var(--acc);border-radius:999px;padding:9px 18px;font-weight:800;cursor:pointer;transition:transform .15s,background .15s,color .15s}
+.chip:hover{transform:translateY(-2px)}
+.chip.on{background:var(--acc);color:#fff;transform:scale(1.06)}
+#note{min-height:84px;display:flex;flex-direction:column;justify-content:center;gap:4px;padding:14px 16px;border-radius:20px;background:color-mix(in srgb,var(--acc) 14%,transparent);font-size:1.05rem}
+#note b{color:var(--acc);font-size:1.15rem}
+#note.pulse{animation:pulse .45s}
+@keyframes pulse{40%{transform:scale(1.03)}}
+#sign{margin-top:20px;font-weight:700;color:var(--soft)}
+.fx,.drift{position:fixed;pointer-events:none;user-select:none}
+.fx{z-index:90;font-size:24px;animation:fx 1.3s ease-out forwards}
+@keyframes fx{0%{transform:translate(-50%,-50%) scale(.3);opacity:1}100%{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1.2) rotate(var(--r));opacity:0}}
+.drift{z-index:1;bottom:-50px;opacity:.55;animation:drift linear infinite}
+@keyframes drift{to{transform:translateY(-115vh) rotate(40deg)}}
+#stage{position:fixed;inset:0;z-index:80;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(8,4,20,.62);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .35s;cursor:pointer}
+#stage.show{opacity:1;pointer-events:auto}
+#bq{width:min(300px,78vw)}
+#bqname{color:#fff;font-weight:800;font-size:1.4rem;margin-top:4px;text-shadow:0 2px 10px rgba(0,0,0,.5);animation:rise .6s 1.5s both}
+.headgrow,.petals{transform-box:fill-box;transform-origin:center}
+.petals{animation:spin 14s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.headgrow{animation:head .7s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes head{from{transform:scale(0)}}
+@keyframes up{from{transform:scaleY(0)}}
+.stemsB{transform-origin:120px 175px;animation:up .8s cubic-bezier(.2,1.2,.4,1) both}
+.coneB{transform-origin:120px 232px;animation:head .6s .1s cubic-bezier(.2,1.5,.4,1) both}
+@media (prefers-reduced-motion:reduce){.card,.drift,#note.pulse,.petals{animation:none}.drift{display:none}}
+</style>
+</head>
+<body>
+<main class="card">
+  <div class="kicker">A little thank-you</div>
+  <h1 id="title"></h1>
+  <p id="msg"></p>
+  <div id="chips"></div>
+  <div id="note" aria-live="polite"></div>
+  <div id="sign"></div>
+</main>
+<div id="stage" aria-hidden="true"><div id="bq"></div><div id="bqname"></div></div>
+
+<script>
+const cfg={
+  title:"Thank you, MGA APORT KO",
+  msg:"HINDI NIYO NABIGONG PASAYAHIN AKO ARAW ARAW. SOBRANG SAYA KO DAHIL NAKILALA KO KAYO😗",
+  friends:"Van | Makes me laugh when I need it most\nBam | The best listener I know\nYobi | Shows up, no matter what\nCia | Always believes in me\nBenz | Cute",
+  from:"Love - Xye",
+  emoji:"💛✨🌸💫"
+};
+const $=id=>document.getElementById(id);
+const esc=t=>String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const L=cfg.friends.split("\n").map(l=>l.trim()).filter(Boolean).map(l=>{const i=l.indexOf("|");return{n:l.slice(0,i).trim(),t:l.slice(i+1).trim()}});
+const E=(()=>{try{return Array.from(new Intl.Segmenter().segment(cfg.emoji),x=>x.segment).filter(x=>x.trim())}catch(e){return Array.from(cfg.emoji).filter(x=>x.trim())}})();
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+let sel=-1,shown=-1,busy=false,timer=null;
+
+function burst(x,y,n){
+  for(let i=0;i<n;i++){
+    const f=document.createElement("span");f.className="fx";f.textContent=rnd(E);
+    const a=Math.random()*6.283,d=50+Math.random()*100;
+    f.style.left=x+"px";f.style.top=y+"px";
+    f.style.setProperty("--dx",Math.cos(a)*d+"px");f.style.setProperty("--dy",Math.sin(a)*d-40+"px");f.style.setProperty("--r",(Math.random()*120-60)+"deg");
+    f.style.fontSize=(18+Math.random()*16)+"px";
+    document.body.appendChild(f);setTimeout(()=>f.remove(),1400);
+  }
+}
+function drift(){
+  for(let i=0;i<10;i++){
+    const d=document.createElement("span");d.className="drift";d.textContent=rnd(E);
+    d.style.left=Math.random()*96+"%";d.style.fontSize=(16+Math.random()*20)+"px";
+    d.style.animationDuration=(9+Math.random()*9)+"s";d.style.animationDelay=(-Math.random()*14)+"s";
+    document.body.appendChild(d);
+  }
+}
+
+/* a different bouquet for every person: colors and arrangement come from their name */
+function hash(s){let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
+function rng(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const PAL=[
+  {c:["#ff6fa5","#ffc2d6","#ffffff","#ffb36b","#c9a7ff"],r:"#e6317d",w:"#f6dcc0"},
+  {c:["#ffd23f","#ffb347","#fff3b0","#ff8a65","#ffe08a"],r:"#2f9e6e",w:"#e9f5e1"},
+  {c:["#8a7dff","#b8a9ff","#e4dcff","#6fc3ff","#ff9ed2"],r:"#5b4bd6",w:"#e8e4ff"},
+  {c:["#ff5a5f","#ff8fa3","#ffd1d9","#ffb347","#ffffff"],r:"#c0243a",w:"#fde2d3"},
+  {c:["#3ed6b0","#8ae8d0","#ffffff","#ffd166","#ff7eb6"],r:"#1e8f7a",w:"#dff6ef"}
+];
+function bouquet(name,idx){
+  const R=rng(hash(name)+idx);
+  let P=PAL[idx%PAL.length];
+  if(idx>=PAL.length){const h=hash(name)%360;P={c:[0,1,2,3,4].map(k=>`hsl(${(h+k*38)%360} 85% ${62+k*4}%)`),r:`hsl(${h} 70% 40%)`,w:`hsl(${h} 60% 90%)`}}
+  const B=[[120,52,.95],[64,84,.8],[176,84,.8],[92,108,.7],[150,110,.7]];
+  const H=B.map((b,i)=>[b[0]+(R()-.5)*16,b[1]+(R()-.5)*10,b[2]*(.9+R()*.2),P.c[i],6+Math.floor(R()*4),R()*45]);
+  const stems=H.map(h=>`<path d="M${h[0]} ${h[1]} Q${(h[0]+120)/2} ${(h[1]+175)/2+8} 120 175" stroke="#3f9b52" stroke-width="4" fill="none" stroke-linecap="round"/>`).join("");
+  const leaf=(x,y,r)=>`<ellipse cx="${x}" cy="${y}" rx="7" ry="17" fill="#4fb860" transform="rotate(${r} ${x} ${y})"/>`;
+  const heads=H.map((h,i)=>{let p="";for(let k=0;k<h[4];k++)p+=`<ellipse cx="50" cy="27" rx="12" ry="21" fill="${h[3]}" stroke="rgba(0,0,0,.14)" stroke-width="1" transform="rotate(${h[5]+k*360/h[4]} 50 50)"/>`;
+    return `<g transform="translate(${h[0]} ${h[1]}) scale(${h[2]*.75}) translate(-50 -50)"><g class="headgrow" style="animation-delay:${.5+i*.18}s"><g class="petals">${p}</g><circle cx="50" cy="50" r="13" fill="#ffd23f"/><circle cx="54" cy="53" r="3" fill="#c98a00" opacity=".5"/></g></g>`}).join("");
+  return `<svg viewBox="0 0 240 240" width="100%" role="img" aria-label="Bouquet for ${esc(name)}"><g class="stemsB">${stems}${leaf(96,140,-55)}${leaf(146,138,55)}${leaf(120,126,0)}</g>${heads}<g class="coneB"><path d="M62 138 L178 138 L120 232 Z" fill="${P.w}" stroke="rgba(0,0,0,.18)" stroke-width="2"/><path d="M88 138 L120 232 M152 138 L120 232" stroke="rgba(0,0,0,.1)" stroke-width="2"/><path d="M90 166 L150 166 L142 180 L98 180Z" fill="${P.r}"/><ellipse cx="108" cy="170" rx="13" ry="8" fill="${P.r}" stroke="rgba(255,255,255,.5)" transform="rotate(-18 108 170)"/><ellipse cx="132" cy="170" rx="13" ry="8" fill="${P.r}" stroke="rgba(255,255,255,.5)" transform="rotate(18 132 170)"/><circle cx="120" cy="172" r="6" fill="${P.r}" stroke="rgba(255,255,255,.6)"/></g></svg>`;
+}
+
+function render(){
+  $("title").textContent=cfg.title;$("msg").textContent=cfg.msg;$("sign").textContent=cfg.from;
+  $("chips").innerHTML=L.map((f,i)=>`<button class="chip${i===sel?" on":""}" data-i="${i}">${esc(f.n)}</button>`).join("");
+  const f=L[shown];
+  $("note").innerHTML=f?`<b>${esc(f.n)}</b><span>${esc(f.t)}</span>`:`<span>Tap a name to open your bouquet 💐</span>`;
+}
+const LINKS={Bam:"sorry.html"};
+function finish(){
+  clearTimeout(timer);
+  const go=LINKS[L[sel].n];
+  if(go){location.href=go;return}
+  $("stage").classList.remove("show");
+  shown=sel;render();
+  const n=$("note");n.classList.remove("pulse");void n.offsetWidth;n.classList.add("pulse");
+  busy=false;
+}
+function pick(i){
+  if(busy)return;
+  busy=true;sel=i;render();
+  const f=L[i];
+  $("bq").innerHTML=bouquet(f.n,i);
+  $("bqname").textContent="For "+f.n+" 💐";
+  $("stage").classList.add("show");
+  setTimeout(()=>burst(innerWidth/2,innerHeight*.4,20),1500);
+  timer=setTimeout(finish,3000);
+}
+$("stage").addEventListener("click",()=>{if(busy)finish()});
+$("chips").addEventListener("click",e=>{const c=e.target.closest(".chip");if(c)pick(+c.dataset.i)});
+addEventListener("pageshow",()=>{busy=false;sel=-1;shown=-1;$("stage").classList.remove("show");render()});
+render();drift();
+setTimeout(()=>burst(innerWidth/2,innerHeight*.25,16),500);
+</script>
+</body>
+</html>
